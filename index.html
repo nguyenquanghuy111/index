@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QUANG HUY MANAGER PRO</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+
+      --bg: #020617;
+      --card: rgba(15, 23, 42, .75);
+      --card2: #111827;
+
+      --text: #f8fafc;
+      --muted: #94a3b8;
+
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --green: #22c55e;
+      --red: #ef4444;
+      --blue: #38bdf8;
+
+      --border: rgba(255, 255, 255, .08);
+
+      --shadow:
+        0 15px 40px rgba(0, 0, 0, .35);
+
+    }
+
+    body.light {
+
+      --bg: #eef2ff;
+      --card: rgba(255, 255, 255, .85);
+      --card2: #ffffff;
+
+      --text: #0f172a;
+      --muted: #475569;
+
+      --border: rgba(0, 0, 0, .08);
+
+      --shadow:
+        0 10px 30px rgba(0, 0, 0, .08);
+
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+
+      font-family: 'Plus Jakarta Sans', sans-serif;
+
+      background:
+        radial-gradient(circle at top left, #312e81 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #0f766e 0%, transparent 35%),
+        var(--bg);
+
+      color: var(--text);
+
+      padding: 18px;
+
+      min-height: 100vh;
+
+      transition: .3s;
+
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    header {
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      padding: 22px;
+
+      border-radius: 28px;
+
+      background: var(--card);
+
+      backdrop-filter: blur(20px);
+
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+
+      margin-bottom: 20px;
+
+    }
+
+    .logo {
+
+      font-size: 32px;
+      font-weight: 800;
+
+      background:
+        linear-gradient(90deg,
+          #a78bfa,
+          #ec4899);
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+    }
+
+    .header-right {
+
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+
+    }
+
+    .clock {
+
+      font-weight: 700;
+      color: var(--blue);
+
+    }
+
+    button {
+
+      border: none;
+      cursor: pointer;
+
+      padding: 12px 18px;
+
+      border-radius: 14px;
+
+      font-weight: 700;
+
+      transition: .25s;
+
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-purple {
+      background: #7c3aed;
+      color: white;
+    }
+
+    .btn-red {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-blue {
+      background: #0ea5e9;
+      color: white;
+    }
+
+    input,
+    select {
+
+      padding: 12px 14px;
+
+      border-radius: 14px;
+
+      border: 1px solid var(--border);
+
+      background: rgba(0, 0, 0, .25);
+
+      color: var(--text);
+
+      outline: none;
+
+    }
+
+    body.light input,
+    body.light select {
+      background: white;
+    }
+
+    .stats {
+
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+      gap: 16px;
+
+      margin-bottom: 20px;
+
+    }
+
+    .card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 24px;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(145deg,
+          rgba(255, 255, 255, .08),
+          rgba(255, 255, 255, .03));
+
+      backdrop-filter: blur(18px);
+
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+
+      transition: .25s;
+
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card::after {
+
+      content: '';
+
+      position: absolute;
+
+      top: -50px;
+      right: -50px;
+
+      width: 140px;
+      height: 140px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255, 255, 255, .04);
+
+    }
+
+    .label {
+
+      font-size: 14px;
+      color: var(--muted);
+
+    }
+
+    .value {
+
+      margin-top: 12px;
+
+      font-size: 30px;
+      font-weight: 800;
+
+    }
+
+    .plus {
+      color: var(--green);
+    }
+
+    .minus {
+      color: var(--red);
+    }
+
+    .tabs {
+
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      margin-bottom: 20px;
+
+    }
+
+    .tab {
+
+      padding: 13px 18px;
+
+      border-radius: 14px;
+
+      cursor: pointer;
+
+      font-weight: 700;
+
+      background: #1e293b;
+
+      transition: .25s;
+
+    }
+
+    body.light .tab {
+      background: #dbeafe;
+    }
+
+    .tab.active {
+
+      background: #7c3aed;
+      color: white;
+
+      box-shadow:
+        0 0 18px rgba(124, 58, 237, .5);
+
+    }
+
+    .main {
+
+      padding: 24px;
+
+      border-radius: 28px;
+
+      background: var(--card);
+
+      backdrop-filter: blur(18px);
+
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+
+    }
+
+    .toolbar {
+
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      margin-bottom: 18px;
+
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+
+      padding: 16px;
+
+      border-bottom:
+        1px solid var(--border);
+
+    }
+
+    .day-item {
+
+      margin-bottom: 12px;
+
+      border-radius: 18px;
+
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+
+      background:
+        rgba(255, 255, 255, .03);
+
+    }
+
+    .day-header {
+
+      padding: 15px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(90deg,
+          rgba(124, 58, 237, .18),
+          rgba(236, 72, 153, .12));
+
+    }
+
+    .day-content {
+
+      display: none;
+
+      padding: 15px;
+
+    }
+
+    .slot {
+      margin-bottom: 15px;
+    }
+
+    .slot-title {
+
+      font-weight: 700;
+
+      margin-bottom: 10px;
+
+    }
+
+    .price-wrap {
+
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+    }
+
+    .price-box {
+
+      padding: 10px 14px;
+
+      border-radius: 12px;
+
+      background: #1e293b;
+
+      cursor: pointer;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transition: .2s;
+
+    }
+
+    body.light .price-box {
+      background: #dbeafe;
+    }
+
+    .price-box.active {
+
+      background: #10b981;
+      color: white;
+
+      box-shadow:
+        0 0 15px rgba(16, 185, 129, .5);
+
+    }
+
+    .chart-box {
+      margin-top: 30px;
+    }
+
+    .warning {
+
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 16px;
+
+      border-radius: 16px;
+
+      background:
+        rgba(239, 68, 68, .15);
+
+      border:
+        1px solid rgba(239, 68, 68, .3);
+
+      color: #fecaca;
+
+      font-weight: 700;
+
+    }
+
+    .toast {
+
+      position: fixed;
+
+      right: 20px;
+      bottom: 20px;
+
+      background: #10b981;
+      color: white;
+
+      padding: 14px 18px;
+
+      border-radius: 14px;
+
+      font-weight: 700;
+
+      opacity: 0;
+
+      transform: translateY(80px);
+
+      transition: .3s;
+
+      z-index: 999;
+
+    }
+
+    .toast.show {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
+
+    .modal {
+
+      position: fixed;
+      inset: 0;
+
+      background: rgba(0, 0, 0, .65);
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      z-index: 1000;
+
+    }
+
+    .modal-box {
+
+      width: 95%;
+      max-width: 420px;
+
+      padding: 24px;
+
+      border-radius: 24px;
+
+      background: var(--card2);
+
+    }
+
+    .modal-box h2 {
+      margin-bottom: 15px;
+    }
+
+    .modal-actions {
+
+      display: flex;
+      gap: 10px;
+
+      margin-top: 15px;
+
+    }
+
+    @media(max-width:768px) {
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        flex-direction: column;
+      }
+
+      .toolbar>* {
+        width: 100%;
+      }
+
+      .value {
+        font-size: 24px;
+      }
+
+      .logo {
+        font-size: 26px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="toast" id="toast">
+    Đã lưu ✓
+  </div>
+
+  <div class="modal" id="editModal">
+
+    <div class="modal-box">
+
+      <h2>Sửa nhân viên</h2>
+
+      <input id="editName" placeholder="Tên nhân viên" style="width:100%;margin-bottom:10px;">
+
+      <input id="editSalary" type="number" placeholder="Lương" style="width:100%;">
+
+      <div class="modal-actions">
+
+        <button class="btn-purple" onclick="saveEdit()">
+          Lưu
+        </button>
+
+        <button class="btn-red" onclick="closeEdit()">
+          Hủy
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+
+    <header>
+
+      <div class="logo">
+        QUANG HUY
+      </div>
+
+      <div class="header-right">
+
+        <div class="clock" id="clock">
+          00:00:00
+        </div>
+
+        <button class="btn-blue" onclick="toggleTheme()">
+          Theme
+        </button>
+
+        <select id="monthSelect"></select>
+
+        <button class="btn-purple" onclick="addMonth()">
+          + Tháng
+        </button>
+
+        <button class="btn-red" onclick="deleteMonth()">
+          Xóa
+        </button>
+
+      </div>
+
+    </header>
+
+    <div class="stats">
+
+      <div class="card">
+        <div class="label">🍜 Doanh thu tháng</div>
+        <div class="value" id="incomeBox">0đ</div>
+      </div>
+
+      <div class="card">
+        <div class="label">💸 Tổng chi</div>
+        <div class="value" id="expenseBox">0đ</div>
+      </div>
+
+      <div class="card">
+        <div class="label">📈 Lợi nhuận tháng</div>
+        <div class="value" id="profitBox">0đ</div>
+      </div>
+
+      <div class="card">
+        <div class="label">💰 Tổng lợi nhuận</div>
+        <div class="value" id="totalProfitBox">0đ</div>
+      </div>
+
+    </div>
+
+    <div class="tabs">
+
+      <div class="tab active" onclick="showTab('salary',event)">
+        Lương
+      </div>
+
+      <div class="tab" onclick="showTab('schedule',event)">
+        Đăng ký
+      </div>
+
+      <div class="tab" onclick="showTab('income',event)">
+        Doanh thu
+      </div>
+
+    </div>
+
+    <div class="main">
+
+      <div id="salary">
+
+        <div class="toolbar">
+
+          <input id="nameInput" placeholder="Tên nhân viên">
+
+          <input id="salaryInput" type="number" placeholder="Lương">
+
+          <button class="btn-purple" onclick="addSalary()">
+            Thêm
+          </button>
+
+        </div>
+
+        <table>
+          <tbody id="salaryBody"></tbody>
+        </table>
+
+      </div>
+
+      <div id="schedule" style="display:none">
+
+        <div id="scheduleList"></div>
+
+      </div>
+
+      <div id="income" style="display:none">
+
+        <div class="toolbar">
+
+          <input id="incomeInput" type="number" placeholder="Nhập doanh thu">
+
+          <button class="btn-purple" onclick="addIncome()">
+            Cộng doanh thu
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="warning" id="warning">
+        ⚠ Tháng này đang lỗ
+      </div>
+
+      <div class="chart-box">
+        <canvas id="profitChart"></canvas>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const monthSelect =
+      document.getElementById("monthSelect");
+
+    const salaryBody =
+      document.getElementById("salaryBody");
+
+    const scheduleList =
+      document.getElementById("scheduleList");
+
+    const toast =
+      document.getElementById("toast");
+
+    const warning =
+      document.getElementById("warning");
+
+    const incomeBox =
+      document.getElementById("incomeBox");
+
+    const expenseBox =
+      document.getElementById("expenseBox");
+
+    const profitBox =
+      document.getElementById("profitBox");
+
+    const totalProfitBox =
+      document.getElementById("totalProfitBox");
+
+    const TIMES = [
+      "13h",
+      "15h",
+      "20h",
+      "21h50",
+      "23h30"
+    ];
+
+    const PRICES = [
+      6000,
+      7000,
+      8000,
+      15000,
+      20000,
+      25000
+    ];
+
+    let editIndex = null;
+
+    let app =
+      JSON.parse(
+        localStorage.getItem("managerPro")
+      )
+      ||
+      [
+        {
+          name: "Tháng 1",
+          income: 0,
+          salary: [],
+          schedule: {}
+        }
+      ];
+
+    let current = 0;
+
+    function showToast() {
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 1500);
+
+    }
+
+    function save() {
+
+      localStorage.setItem(
+        "managerPro",
+        JSON.stringify(app)
+      );
+
+      showToast();
+
+      renderAll();
+
+    }
+
+    function renderMonthSelect() {
+
+      monthSelect.innerHTML =
+        app.map((m, i) => `
+
+<option value="${i}">
+${m.name}
+</option>
+
+`).join("");
+
+      monthSelect.value =
+        current;
+
+    }
+
+    monthSelect.onchange = () => {
+
+      current =
+        Number(
+          monthSelect.value
+        );
+
+      renderAll();
+
+    };
+
+    function addMonth() {
+
+      app.push({
+
+        name:
+          "Tháng " +
+          (app.length + 1),
+
+        income: 0,
+
+        salary: [],
+
+        schedule: {}
+
+      });
+
+      current =
+        app.length - 1;
+
+      save();
+
+    }
+
+    function deleteMonth() {
+
+      if (
+        !confirm(
+          "Xóa tháng này?"
+        )
+      )
+        return;
+
+      app.splice(
+        current,
+        1
+      );
+
+      if (
+        app.length === 0
+      ) {
+
+        app = [{
+
+          name: "Tháng 1",
+
+          income: 0,
+
+          salary: [],
+
+          schedule: {}
+
+        }];
+
+      }
+
+      current =
+        Math.max(
+          0,
+          current - 1
+        );
+
+      save();
+
+    }
+
+    function addSalary() {
+
+      let name =
+        document
+          .getElementById(
+            "nameInput"
+          )
+          .value
+          .trim();
+
+      let salary =
+        Number(
+          document
+            .getElementById(
+              "salaryInput"
+            )
+            .value
+        );
+
+      if (
+        !name ||
+        isNaN(salary)
+      )
+        return;
+
+      app[current]
+        .salary
+        .push({
+
+          name,
+          salary
+
+        });
+
+      document
+        .getElementById(
+          "nameInput"
+        )
+        .value = "";
+
+      document
+        .getElementById(
+          "salaryInput"
+        )
+        .value = "";
+
+      save();
+
+    }
+
+    function deleteSalary(i) {
+
+      if (
+        confirm(
+          "Xóa nhân viên?"
+        )
+      ) {
+
+        app[current]
+          .salary
+          .splice(i, 1);
+
+        save();
+
+      }
+
+    }
+
+    function editSalary(i) {
+
+      editIndex = i;
+
+      document
+        .getElementById(
+          "editName"
+        )
+        .value =
+        app[current]
+          .salary[i]
+          .name;
+
+      document
+        .getElementById(
+          "editSalary"
+        )
+        .value =
+        app[current]
+          .salary[i]
+          .salary;
+
+      document
+        .getElementById(
+          "editModal"
+        )
+        .style.display =
+        "flex";
+
+    }
+
+    function closeEdit() {
+
+      document
+        .getElementById(
+          "editModal"
+        )
+        .style.display =
+        "none";
+
+    }
+
+    function saveEdit() {
+
+      app[current]
+        .salary[editIndex]
+        .name =
+        document
+          .getElementById(
+            "editName"
+          )
+          .value;
+
+      app[current]
+        .salary[editIndex]
+        .salary =
+        Number(
+          document
+            .getElementById(
+              "editSalary"
+            )
+            .value
+        );
+
+      closeEdit();
+
+      save();
+
+    }
+
+    function renderSalary() {
+
+      salaryBody.innerHTML =
+
+        app[current]
+          .salary
+          .map((s, i) => `
+
+<tr>
+
+<td>
+${s.name}
+</td>
+
+<td>
+${s.salary.toLocaleString()}đ
+</td>
+
+<td>
+
+<button
+class="btn-blue"
+onclick="
+editSalary(${i})
+">
+
+Sửa
+
+</button>
+
+</td>
+
+<td>
+
+<button
+class="btn-red"
+onclick="
+deleteSalary(${i})
+">
+
+Xóa
+
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
+    }
+
+    function addIncome() {
+
+      let value =
+        Number(
+          document
+            .getElementById(
+              "incomeInput"
+            )
+            .value
+        );
+
+      if (
+        isNaN(value)
+      )
+        return;
+
+      app[current]
+        .income += value;
+
+      document
+        .getElementById(
+          "incomeInput"
+        )
+        .value = "";
+
+      save();
+
+    }
+
+    function getMonthDays() {
+
+      const now =
+        new Date();
+
+      const year =
+        now.getFullYear();
+
+      const month =
+        current + 1;
+
+      return new Date(
+        year,
+        month,
+        0
+      ).getDate();
+
+    }
+
+    function toggleDay(day) {
+
+      const box =
+        document
+          .getElementById(
+            `day-${day}`
+          );
+
+      if (
+        box.style.display
+        === "block"
+      ) {
+
+        box.style.display =
+          "none";
+
+      } else {
+
+        box.style.display =
+          "block";
+
+      }
+
+    }
+
+    /*
+    CHỌN NHIỀU MỨC GIÁ
+    */
+
+    function togglePrice(
+      day,
+      time,
+      price
+    ) {
+
+      const key =
+        day + "-" + time;
+
+      const sch =
+        app[current]
+          .schedule;
+
+      if (
+        !Array.isArray(
+          sch[key]
+        )
+      ) {
+        sch[key] = [];
+      }
+
+      const index =
+        sch[key]
+          .indexOf(price);
+
+      if (index > -1) {
+
+        sch[key]
+          .splice(
+            index,
+            1
+          );
+
+      } else {
+
+        sch[key]
+          .push(price);
+
+      }
+
+      save();
+
+    }
+    function renderSchedule() {
+
+      let html = "";
+
+      const days =
+        getMonthDays();
+
+      for (
+        let day = 1;
+        day <= days;
+        day++
+      ) {
+
+        html += `
+
+<div class="day-item">
+
+<div class="day-header"
+onclick="toggleDay(${day})">
+📅 Ngày ${day}
+</div>
+
+<div class="day-content"
+id="day-${day}">
+
+`;
+
+        TIMES.forEach(time => {
+
+          const key =
+            day + "-" + time;
+
+          const selected =
+            app[current]
+              .schedule[key] || [];
+
+          html += `
+
+<div class="slot">
+
+<div class="slot-title">
+🕒 ${time}
+</div>
+
+<div class="price-wrap">
+
+${PRICES.map(p => `
+
+<div class="price-box ${selected.includes(p)
+              ? "active"
+              : ""
+            }"
+onclick="
+togglePrice(
+${day},
+'${time}',
+${p}
+)
+">
+${p / 1000}k
+</div>
+
+`).join("")}
+
+</div>
+
+</div>
+
+`;
+
+        });
+
+        html += `
+</div>
+</div>
+`;
+
+      }
+
+      scheduleList.innerHTML = html;
+
+    }
+
+    /* CHART */
+
+    let chart;
+
+    function renderChart() {
+
+      const profits =
+        app.map(m => {
+
+          const sal =
+            m.salary.reduce(
+              (a, b) => a + b.salary,
+              0
+            );
+
+          const sch =
+            Object.values(m.schedule)
+              .reduce((a, val) => {
+
+                if (Array.isArray(val)) {
+                  return a + val.reduce((x, y) => x + y, 0);
+                }
+
+                return a;
+
+              }, 0);
+
+          return m.income - sal - sch;
+
+        });
+
+      const ctx =
+        document.getElementById("profitChart");
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+          labels: app.map(x => x.name),
+
+          datasets: [{
+            label: "Lợi nhuận",
+
+            data: profits,
+
+            borderColor: "#8b5cf6",
+
+            backgroundColor: "rgba(139,92,246,.2)",
+
+            tension: .4,
+
+            fill: true
+
+          }]
+
+        },
+
+        options: {
+          responsive: true
+        }
+
+      });
+
+    }
+
+    /* THỐNG KÊ */
+
+    function updateStats() {
+
+      const m = app[current];
+
+      const salaryTotal =
+        m.salary.reduce(
+          (a, b) => a + b.salary, 0
+        );
+
+      const scheduleTotal =
+        Object.values(m.schedule)
+          .reduce((sum, val) => {
+
+            if (Array.isArray(val)) {
+              return sum +
+                val.reduce((a, b) => a + b, 0);
+            }
+
+            return sum;
+
+          }, 0);
+
+      const expense =
+        salaryTotal + scheduleTotal;
+
+      const profit =
+        m.income - expense;
+
+      incomeBox.innerText =
+        m.income.toLocaleString() + "đ";
+
+      expenseBox.innerText =
+        expense.toLocaleString() + "đ";
+
+      profitBox.innerText =
+        profit.toLocaleString() + "đ";
+
+      profitBox.className =
+        "value " +
+        (profit >= 0 ? "plus" : "minus");
+
+      const total =
+        app.reduce((s, m) => {
+
+          const sal =
+            m.salary.reduce(
+              (a, b) => a + b.salary, 0
+            );
+
+          const sch =
+            Object.values(m.schedule)
+              .reduce((sum, val) => {
+
+                if (Array.isArray(val)) {
+                  return sum +
+                    val.reduce((a, b) => a + b, 0);
+                }
+
+                return sum;
+
+              }, 0);
+
+          return s + (m.income - sal - sch);
+
+        }, 0);
+
+      totalProfitBox.innerText =
+        total.toLocaleString() + "đ";
+
+      totalProfitBox.className =
+        "value " +
+        (total >= 0 ? "plus" : "minus");
+
+      warning.style.display =
+        profit < 0 ? "block" : "none";
+
+    }
+
+    /* RENDER ALL */
+
+    function renderAll() {
+
+      renderMonthSelect();
+
+      renderSalary();
+
+      renderSchedule();
+
+      updateStats();
+
+      renderChart();
+
+    }
+
+    /* TAB */
+
+    function showTab(id, e) {
+
+      document.querySelectorAll(
+        "#salary,#schedule,#income"
+      ).forEach(el => {
+        el.style.display = "none";
+      });
+
+      document.getElementById(id)
+        .style.display = "block";
+
+      document.querySelectorAll(".tab")
+        .forEach(t => t.classList.remove("active"));
+
+      e.target.classList.add("active");
+
+    }
+
+    /* CLOCK */
+
+    function updateClock() {
+
+      document.getElementById("clock")
+        .innerText =
+        new Date().toLocaleTimeString("vi-VN");
+
+    }
+
+    setInterval(updateClock, 1000);
+
+    /* THEME */
+
+    function toggleTheme() {
+
+      document.body.classList.toggle("light");
+
+      localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light")
+          ? "light" : "dark"
+      );
+
+    }
+
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light");
+    }
+
+    /* INIT */
+
+    renderAll();
+    updateClock();
+
+  </script>
+
+</body>
+
+</html>
